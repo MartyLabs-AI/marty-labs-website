@@ -176,3 +176,6 @@ next-env.d.ts
 i2i-workflow-fixed.json
 n8n-workflow-updated.json
 producer_agent_workflow.json
+
+# Temporary backup directories during deployment
+_temp_deployment_backup/
