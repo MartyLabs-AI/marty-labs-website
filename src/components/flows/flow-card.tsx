@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Zap, Users, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
 
 interface Flow {
   id: string;
@@ -26,7 +25,6 @@ interface FlowCardProps {
 
 export function FlowCard({ flow }: FlowCardProps) {
   const router = useRouter();
-  const { isSignedIn } = useUser();
 
   const handleTryFlow = () => {
     // DEVELOPMENT MODE - Skip sign-in requirement
