@@ -98,9 +98,9 @@ export function WaitlistPopup({ isOpen, onClose }: WaitlistPopupProps) {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-medium text-foreground mb-2">You're on the list!</h3>
+            <h3 className="text-xl font-medium text-foreground mb-2">You&apos;re on the list!</h3>
             <p className="text-muted-foreground text-sm">
-              We'll reach out soon with early access to Producer Agent.
+              We&apos;ll reach out soon with early access to Producer Agent.
             </p>
           </div>
         </DialogContent>

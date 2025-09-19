@@ -104,7 +104,7 @@ export function FlowsGallery() {
               <CardContent className="p-0">
                 <Search className="w-12 h-12 mx-auto mb-6 text-muted-foreground" />
                 <h3 className="text-xl font-medium mb-3 text-foreground">No workflows found</h3>
-                <p className="text-sm text-muted-foreground">Try adjusting your search or filters to find what you're looking for.</p>
+                <p className="text-sm text-muted-foreground">Try adjusting your search or filters to find what you&apos;re looking for.</p>
               </CardContent>
             </Card>
           </div>

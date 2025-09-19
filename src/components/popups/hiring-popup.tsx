@@ -106,7 +106,7 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
             </div>
             <h3 className="text-xl font-medium text-foreground mb-2">Application Received!</h3>
             <p className="text-muted-foreground text-sm">
-              Thanks for applying. We'll review your application and get back to you soon.
+              Thanks for applying. We&apos;ll review your application and get back to you soon.
             </p>
           </div>
         </DialogContent>
