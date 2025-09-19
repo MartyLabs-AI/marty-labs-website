@@ -885,7 +885,7 @@ export const IconHover3D: React.FC<Props> = ({
                       animate={{
                         clipPath: `inset(0 ${isHoverVariant ? '0%' : '100%'} 0 0)`
                       }}
-                      transition={titleTransition}
+                      transition={titleTransition as any}
                     >
                       {heading}
                     </motion.span>
@@ -906,7 +906,7 @@ export const IconHover3D: React.FC<Props> = ({
                       animate={{
                         scaleX: isHoverVariant ? 1 : 0
                       }}
-                      transition={titleTransition}
+                      transition={titleTransition as any}
                     />
                   </motion.div>
                 </motion.div>

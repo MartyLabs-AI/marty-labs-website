@@ -51,7 +51,7 @@ const ScrambleTextCascading = forwardRef<ScrambleTextCascadingHandle, ScrambleTe
   ) => {
     const containerRef = useRef<HTMLSpanElement>(null)
     const hasCompletedOnce = useRef(false)
-    const timeoutRef = useRef<NodeJS.Timeout>()
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const { ref: scrambleRef, replay } = useScramble({
       text,

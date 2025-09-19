@@ -1,119 +1,137 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/../convex/_generated/api";
 import { FlowCard } from "./flow-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Search, Filter } from "lucide-react";
+import { Search } from "lucide-react";
+
+// TEMPORARY SIMPLE FLOWS GALLERY FOR DEPLOYMENT
+// This replaces the complex Convex-integrated version during deployment
+// TODO: Restore full Convex functionality when available
+
+// Mock flow data for deployment
+const mockFlows = [
+  {
+    id: "1",
+    title: "Producer Agent",
+    description: "AI-powered content creation and marketing materials generator",
+    category: "Marketing",
+    tags: ["AI", "Content", "Marketing"],
+    estimatedProcessingTime: 120,
+    thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=500&h=300&fit=crop",
+    creditsPerGeneration: 10,
+    requiredPlan: "pro",
+    isActive: true,
+  },
+  {
+    id: "2", 
+    title: "Brand Identity Kit",
+    description: "Complete brand identity package with logos, colors, and guidelines",
+    category: "Branding",
+    tags: ["Branding", "Logo", "Design"],
+    estimatedProcessingTime: 300,
+    thumbnail: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=300&fit=crop",
+    creditsPerGeneration: 15,
+    requiredPlan: "business", 
+    isActive: true,
+  },
+  {
+    id: "3",
+    title: "Social Media Pack",
+    description: "Ready-to-use social media posts, stories, and templates",
+    category: "Social Media",
+    tags: ["Social", "Templates", "Posts"],
+    estimatedProcessingTime: 90,
+    thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=500&h=300&fit=crop",
+    creditsPerGeneration: 8,
+    requiredPlan: "pro",
+    isActive: true,
+  }
+];
 
 export function FlowsGallery() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const flows = useQuery(api.flows.getPublicFlows, {
-    search: searchQuery || undefined,
-    category: selectedCategory || undefined,
-    limit: 50,
-  });
+  // For deployment, use mock data instead of Convex
+  const flows = mockFlows;
+  const isLoading = false;
 
-  const categories = useQuery(api.flows.getFlowCategories);
+  const filteredFlows = flows?.filter((flow) => {
+    const matchesSearch = flow.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         flow.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = !selectedCategory || flow.category === selectedCategory;
+    return matchesSearch && matchesCategory && flow.isActive;
+  }) || [];
 
-  const isLoading = flows === undefined || categories === undefined;
+  const categories = Array.from(new Set(flows?.map(flow => flow.category) || []));
 
   return (
     <div className="space-y-8">
-      {/* Search Section */}
-      <div className="bg-card border border-border rounded-lg p-6 shadow-lg">
-        <div className="flex flex-col sm:flex-row gap-6">
-          <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Search workflows..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 h-12 bg-background border-input"
-            />
-          </div>
-          <div className="flex flex-wrap gap-3">
+      {/* Search and Filter */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            placeholder="Search flows..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            variant={selectedCategory === "" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory("")}
+          >
+            All
+          </Button>
+          {categories.map((category) => (
             <Button
-              variant={selectedCategory === "" ? "default" : "outline"}
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
-              onClick={() => setSelectedCategory("")}
+              onClick={() => setSelectedCategory(category)}
             >
-              All
+              {category}
             </Button>
-            {categories?.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Results */}
-      {!isLoading && flows && flows.length > 0 && (searchQuery || selectedCategory) && (
-        <div className="flex justify-end">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setSearchQuery("");
-              setSelectedCategory("");
-            }}
-          >
-            Clear Filters
-          </Button>
+      {/* Flow Grid */}
+      {isLoading ? (
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">Loading flows...</p>
+        </div>
+      ) : filteredFlows.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-lg font-medium text-muted-foreground mb-2">
+            {searchQuery || selectedCategory ? "No flows found" : "No flows available"}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {searchQuery || selectedCategory 
+              ? "Try adjusting your search or filter criteria"
+              : "Check back later for new creative tools"
+            }
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredFlows.map((flow) => (
+            <FlowCard key={flow.id} flow={flow} />
+          ))}
         </div>
       )}
 
-      {/* Flows Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {isLoading ? (
-          // Loading skeletons
-          Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i} className="p-6 h-full animate-pulse">
-              <div className="h-4 bg-muted rounded w-3/4 mb-3"></div>
-              <div className="h-3 bg-muted/60 rounded w-full mb-4"></div>
-              <div className="aspect-video bg-muted rounded-lg mb-4"></div>
-              <div className="flex gap-2 mb-4">
-                <div className="h-5 bg-muted/60 rounded-full w-12"></div>
-                <div className="h-5 bg-muted/60 rounded-full w-16"></div>
-                <div className="h-5 bg-muted/60 rounded-full w-14"></div>
-              </div>
-              <div className="flex justify-between mb-4">
-                <div className="h-4 bg-muted/60 rounded w-16"></div>
-                <div className="h-4 bg-muted/60 rounded w-20"></div>
-              </div>
-              <div className="h-10 bg-muted rounded w-full"></div>
-            </Card>
-          ))
-        ) : flows?.length === 0 ? (
-          // No results
-          <div className="col-span-full">
-            <Card className="border-2 border-dashed border-border p-12 text-center">
-              <CardContent className="p-0">
-                <Search className="w-12 h-12 mx-auto mb-6 text-muted-foreground" />
-                <h3 className="text-xl font-medium mb-3 text-foreground">No workflows found</h3>
-                <p className="text-sm text-muted-foreground">Try adjusting your search or filters to find what you&apos;re looking for.</p>
-              </CardContent>
-            </Card>
-          </div>
-        ) : (
-          // Flow cards
-          flows?.map((flow) => (
-            <FlowCard key={flow.id} flow={flow} />
-          ))
-        )}
+      {/* Development Notice */}
+      <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <p className="text-sm text-blue-800 dark:text-blue-200">
+          <strong>Development Mode:</strong> Currently showing sample flows. 
+          Full database integration will be restored in the next deployment phase.
+        </p>
       </div>
     </div>
   );

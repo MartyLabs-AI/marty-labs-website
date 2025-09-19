@@ -239,7 +239,7 @@ export function FlowForm({ flow, onSubmit, isSubmitting }: FlowFormProps) {
               type="number"
               min={field.minimum}
               max={field.maximum}
-              defaultValue={field.default}
+              defaultValue={field.default as string | number | undefined}
               placeholder={`Enter ${field.title.toLowerCase()}`}
               {...register(fieldName, { 
                 required: flow.inputSchema.required?.includes(fieldName),

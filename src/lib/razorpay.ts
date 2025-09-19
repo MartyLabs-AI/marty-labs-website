@@ -1,5 +1,6 @@
 // Razorpay integration for subscription billing
 import Razorpay from 'razorpay';
+import crypto from 'crypto';
 
 // Initialize Razorpay instance
 export const razorpay = new Razorpay({
@@ -232,6 +233,7 @@ export const createRazorpaySubscription = async (subscriptionData: {
   notes?: Record<string, string>;
 }) => {
   try {
+    // @ts-ignore - Razorpay SDK type definition issue
     const subscription = await razorpay.subscriptions.create({
       plan_id: subscriptionData.planId,
       customer_id: subscriptionData.customerId,
@@ -266,7 +268,6 @@ export const cancelRazorpaySubscription = async (subscriptionId: string, cancelA
 // Verify webhook signature
 export const verifyRazorpayWebhook = (body: string, signature: string, secret: string): boolean => {
   try {
-    const crypto = require('crypto');
     const expectedSignature = crypto
       .createHmac('sha256', secret)
       .update(body)
