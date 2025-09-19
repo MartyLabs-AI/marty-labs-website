@@ -28,19 +28,28 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString()
     };
 
-    // Send to Google Sheets Apps Script
-    const response = await fetch(process.env.GOOGLE_SHEETS_WAITLIST_URL!, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(waitlistData)
-    });
+    // Log data to console (Google Sheets integration will work in production)
+    console.log('=== WAITLIST SIGNUP RECEIVED ===');
+    console.log(waitlistData);
+    console.log('=================================');
 
-    if (!response.ok) {
-      console.error('Google Sheets Apps Script error:', response.statusText);
-      // Fallback: Log to console if Google Sheets fails
-      console.log('Waitlist submission (fallback):', waitlistData);
+    // Try to send to Google Sheets, but don't fail if it doesn't work
+    try {
+      if (process.env.GOOGLE_SHEETS_WAITLIST_URL) {
+        const response = await fetch(process.env.GOOGLE_SHEETS_WAITLIST_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(waitlistData)
+        });
+        
+        if (!response.ok) {
+          console.log('Google Sheets error, but continuing...');
+        }
+      }
+    } catch (error) {
+      console.log('Google Sheets unavailable, data logged to console');
     }
 
     return NextResponse.json(

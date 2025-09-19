@@ -11,6 +11,13 @@ import {
   DialogHeader, 
   DialogTitle 
 } from "@/components/ui/dialog";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 import { Loader2, Upload } from "lucide-react";
 
 interface HiringPopupProps {
@@ -22,6 +29,7 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    department: "",
     resume: null as File | null,
     roleDescription: "",
     achievements: "",
@@ -40,6 +48,7 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
       const submitData = new FormData();
       submitData.append('name', formData.name);
       submitData.append('phone', formData.phone);
+      submitData.append('department', formData.department);
       submitData.append('roleDescription', formData.roleDescription);
       submitData.append('achievements', formData.achievements);
       submitData.append('linkedin', formData.linkedin);
@@ -64,6 +73,7 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
           setFormData({
             name: "",
             phone: "",
+            department: "",
             resume: null,
             roleDescription: "",
             achievements: "",
@@ -157,8 +167,33 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
           </div>
 
           <div className="col-span-2">
+            <Label htmlFor="department" className="text-sm font-medium text-foreground">
+              Department *
+            </Label>
+            <Select value={formData.department} onValueChange={(value) => handleInputChange('department', value)}>
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder="Select department" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="engineering">Engineering</SelectItem>
+                <SelectItem value="design">Design & Creative</SelectItem>
+                <SelectItem value="marketing">Marketing</SelectItem>
+                <SelectItem value="sales">Sales</SelectItem>
+                <SelectItem value="operations">Operations</SelectItem>
+                <SelectItem value="product">Product</SelectItem>
+                <SelectItem value="data-science">Data Science</SelectItem>
+                <SelectItem value="customer-success">Customer Success</SelectItem>
+                <SelectItem value="finance">Finance</SelectItem>
+                <SelectItem value="hr">Human Resources</SelectItem>
+                <SelectItem value="business-development">Business Development</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="col-span-2">
             <Label htmlFor="resume" className="text-sm font-medium text-foreground">
-              Resume *
+              Resume/Portfolio *
             </Label>
             <div className="mt-1">
               <label className="flex flex-col items-center justify-center w-full h-18 border-2 border-border border-dashed rounded-lg cursor-pointer bg-muted/20 hover:bg-muted/30 transition-colors">

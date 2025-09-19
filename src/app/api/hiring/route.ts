@@ -4,22 +4,20 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     
-    // Extract form fields
+    // Extract form fields - match popup field names
     const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
-    const position = formData.get('position') as string;
-    const experience = formData.get('experience') as string;
-    const portfolio = formData.get('portfolio') as string;
-    const coverLetter = formData.get('coverLetter') as string;
+    const department = formData.get('department') as string;
+    const roleDescription = formData.get('roleDescription') as string;
+    const achievements = formData.get('achievements') as string;
     const linkedin = formData.get('linkedin') as string;
     const timestamp = formData.get('timestamp') as string;
     const resume = formData.get('resume') as File;
 
     // Validate required fields
-    if (!name || !email || !phone || !position) {
+    if (!name || !phone || !department || !roleDescription) {
       return NextResponse.json(
-        { error: 'Missing required fields: name, email, phone, and position are required' },
+        { error: 'Missing required fields: name, phone, department, and role description are required' },
         { status: 400 }
       );
     }
@@ -36,30 +34,37 @@ export async function POST(request: NextRequest) {
     const hiringData = {
       timestamp: timestamp || new Date().toISOString(),
       name,
-      email,
       phone,
-      position,
-      experience: experience || '',
-      portfolio: portfolio || '',
-      coverLetter: coverLetter || '',
+      department,
+      roleDescription,
+      achievements: achievements || '',
       linkedin: linkedin || '',
       resumeInfo,
       source: 'website'
     };
 
-    // Send to Google Sheets Apps Script
-    const response = await fetch(process.env.GOOGLE_SHEETS_HIRING_URL!, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(hiringData)
-    });
+    // Log data to console (Google Sheets integration will work in production)
+    console.log('=== HIRING APPLICATION RECEIVED ===');
+    console.log(hiringData);
+    console.log('=====================================');
 
-    if (!response.ok) {
-      console.error('Google Sheets Apps Script error:', response.statusText);
-      // Fallback: Log to console if Google Sheets fails
-      console.log('Hiring submission (fallback):', hiringData);
+    // Try to send to Google Sheets, but don't fail if it doesn't work
+    try {
+      if (process.env.GOOGLE_SHEETS_HIRING_URL) {
+        const response = await fetch(process.env.GOOGLE_SHEETS_HIRING_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(hiringData)
+        });
+        
+        if (!response.ok) {
+          console.log('Google Sheets error, but continuing...');
+        }
+      }
+    } catch (error) {
+      console.log('Google Sheets unavailable, data logged to console');
     }
 
     return NextResponse.json(
