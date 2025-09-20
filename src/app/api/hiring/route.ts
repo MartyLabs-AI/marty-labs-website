@@ -30,41 +30,41 @@ export async function POST(request: NextRequest) {
       resumeInfo = `${resume.name} (${Math.round(resume.size / 1024)}KB)`;
     }
 
-    // Prepare data for Google Sheets Apps Script
+    // Prepare data for Google Sheets Apps Script (matching your script exactly)
     const hiringData = {
-      timestamp: timestamp || new Date().toISOString(),
-      name,
-      phone,
-      department,
-      roleDescription,
-      achievements: achievements || '',
-      linkedin: linkedin || '',
-      resumeInfo,
-      source: 'website'
+      Name: name,
+      Phone: phone,
+      Position: department,  // Your script expects "Position", not "department"
+      "Role Description": roleDescription,
+      LinkedIn: linkedin || '',
+      Achievements: achievements || '',
+      Resume: resumeInfo || 'No resume uploaded'
     };
 
-    // Log data to console (Google Sheets integration will work in production)
+    // Log data to console
     console.log('=== HIRING APPLICATION RECEIVED ===');
     console.log(hiringData);
     console.log('=====================================');
 
-    // Try to send to Google Sheets, but don't fail if it doesn't work
+    // Send to Google Apps Script
     try {
-      if (process.env.GOOGLE_SHEETS_HIRING_URL) {
-        const response = await fetch(process.env.GOOGLE_SHEETS_HIRING_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(hiringData)
-        });
-        
-        if (!response.ok) {
-          console.log('Google Sheets error, but continuing...');
-        }
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHLZkz7rwBczTlLKFI-aJJfV6Cx3d8kTqxqHoWmUyAQJMI0hJLLFGUZyE-3LLcQDmU/exec';
+      
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(hiringData)
+      });
+
+      if (!response.ok) {
+        console.error('Google Apps Script error:', response.status, response.statusText);
+      } else {
+        console.log('Successfully sent to Google Sheets');
       }
     } catch (error) {
-      console.log('Google Sheets unavailable, data logged to console');
+      console.error('Failed to send to Google Sheets:', error);
     }
 
     return NextResponse.json(

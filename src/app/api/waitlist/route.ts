@@ -12,44 +12,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare data for Google Sheets Apps Script
+    // Prepare data for Google Sheets Apps Script (matching your script exactly)
     const waitlistData = {
-      email: body.email,
-      name: body.name || '',
-      company: body.company || '',
-      role: body.role || '',
-      videoGenerations: body.videoGenerations || '',
-      companySize: body.companySize || '',
-      whatsapp: body.whatsapp || '',
-      linkedin: body.linkedin || '',
-      useCase: body.useCase || '',
-      priority: body.priority || 'Normal',
-      source: body.source || 'website',
-      timestamp: new Date().toISOString()
+      Name: body.name || 'Not provided',
+      Email: body.email
     };
 
-    // Log data to console (Google Sheets integration will work in production)
+    // Log data to console
     console.log('=== WAITLIST SIGNUP RECEIVED ===');
     console.log(waitlistData);
     console.log('=================================');
 
-    // Try to send to Google Sheets, but don't fail if it doesn't work
+    // Send to Google Apps Script
     try {
-      if (process.env.GOOGLE_SHEETS_WAITLIST_URL) {
-        const response = await fetch(process.env.GOOGLE_SHEETS_WAITLIST_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(waitlistData)
-        });
-        
-        if (!response.ok) {
-          console.log('Google Sheets error, but continuing...');
-        }
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKrxs8TcNM2_cHfhyZJcvk3AKB2PrJLlTULUfmUGU8_N6rVzx8OjCLF86c-_t6YQLxBw/exec';
+      
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(waitlistData)
+      });
+
+      if (!response.ok) {
+        console.error('Google Apps Script error:', response.status, response.statusText);
+      } else {
+        console.log('Successfully sent to Google Sheets');
       }
     } catch (error) {
-      console.log('Google Sheets unavailable, data logged to console');
+      console.error('Failed to send to Google Sheets:', error);
     }
 
     return NextResponse.json(
