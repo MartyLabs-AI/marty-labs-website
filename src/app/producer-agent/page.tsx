@@ -6,7 +6,7 @@ import { MiniNavbar } from "@/components/ui/mini-navbar";
 import { HiringPopup } from "@/components/popups/hiring-popup";
 import { WaitlistPopup } from "@/components/popups/waitlist-popup";
 import { WaveAnimation } from "@/components/ui/wave-animation-1";
-import { Features } from "@/components/ui/features-8";
+import { FeaturesFlipCards } from "@/components/ui/features-flip-cards";
 import { BlurFade } from "@/components/ui/blur-fade";
 import SmoothScrollWrapper from "@/components/ui/smooth-scroll-wrapper";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -97,6 +97,7 @@ const HeroSection: React.FC<{ setWaitlistOpen: (open: boolean) => void }> = ({ s
                 <Button
                   variant="outline"
                   size="lg"
+                  onClick={() => window.open('https://calendly.com/martylabs', '_blank')}
                   className="min-w-[240px] h-[56px] text-lg px-12 py-4 border-white/20 text-white hover:bg-white/10 hover:border-white/40 transition-all duration-300"
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -156,22 +157,22 @@ const WorkflowSection: React.FC = () => {
     {
       icon: Upload,
       title: "Upload & Describe",
-      description: "Upload content or describe your vision. AI understands context and style."
+      description: "@producer_agent reads your content and understands your creative vision with context-aware intelligence."
     },
     {
       icon: Brain,
       title: "AI Processing", 
-      description: "Neural networks analyze and generate content with precision."
+      description: "@producer_agent processes your request using advanced neural networks to generate precise content."
     },
     {
       icon: Settings,
       title: "Smart Editing",
-      description: "Intelligent tools adapt to your preferences and requirements."
+      description: "@producer_agent adapts to your style preferences and applies intelligent editing tools automatically."
     },
     {
       icon: Download,
       title: "Export & Scale",
-      description: "Download in multiple formats with 4K upscaling quality."
+      description: "@producer_agent delivers your content in multiple formats with professional 4K upscaling quality."
     }
   ];
 
@@ -251,6 +252,7 @@ const CTASection: React.FC<{ setWaitlistOpen: (open: boolean) => void }> = ({ se
             <Button
               variant="outline"
               size="lg"
+              onClick={() => window.open('https://calendly.com/martylabs', '_blank')}
               className="min-w-[240px] h-[56px] text-lg px-12 py-4 border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
             >
               <div className="flex items-center justify-center gap-2">
@@ -281,7 +283,7 @@ export default function ProducerAgentPage() {
         
         <StatsSection />
         
-        <Features />
+        <FeaturesFlipCards />
         
         <WorkflowSection />
         
