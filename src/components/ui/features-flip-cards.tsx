@@ -9,50 +9,42 @@ const features = [
   {
     icon: Sparkles,
     title: "Advanced AI Generation",
-    description: "@producer_agent delivers studio-grade output with model routing, negative prompts, guardrails, and repeatable style control.",
-    visual: "✨"
+    description: "@producer_agent delivers studio-grade output with model routing, negative prompts, guardrails, and repeatable style control."
   },
   {
     icon: Zap,
     title: "Lightning-Fast Processing",
-    description: "@producer_agent uses parallel batch renders and smart caching to shrink feedback loops from days to minutes.",
-    visual: "⚡"
+    description: "@producer_agent uses parallel batch renders and smart caching to shrink feedback loops from days to minutes."
   },
   {
     icon: Brain,
     title: "Context Memory System",
-    description: "@producer_agent remembers brand rules, prompts, and past picks to reproduce the same look every time.",
-    visual: "🧠"
+    description: "@producer_agent remembers brand rules, prompts, and past picks to reproduce the same look every time."
   },
   {
     icon: Film,
     title: "4K Upscaling & Enhancement",
-    description: "@producer_agent cleans plates, sharpens detail, and exports pristine 4K deliverables without re-rendering.",
-    visual: "🎬"
+    description: "@producer_agent cleans plates, sharpens detail, and exports pristine 4K deliverables without re-rendering."
   },
   {
     icon: Palette,
     title: "Creative Orchestrator",
-    description: "@producer_agent converts intent into scenes and variants, prepping production-ready deliverables in one flow.",
-    visual: "🎨"
+    description: "@producer_agent converts intent into scenes and variants, prepping production-ready deliverables in one flow."
   },
   {
     icon: Wand2,
     title: "Smart Style Transfer",
-    description: "@producer_agent applies consistent visual styling across all your content with intelligent brand recognition.",
-    visual: "🪄"
+    description: "@producer_agent applies consistent visual styling across all your content with intelligent brand recognition."
   },
   {
     icon: Shield,
     title: "Enterprise Security",
-    description: "@producer_agent ensures your content and data are protected with enterprise-grade security protocols.",
-    visual: "🛡️"
+    description: "@producer_agent ensures your content and data are protected with enterprise-grade security protocols."
   },
   {
     icon: Users,
     title: "Team Collaboration",
-    description: "@producer_agent enables seamless collaboration with shared workspaces and real-time editing capabilities.",
-    visual: "👥"
+    description: "@producer_agent enables seamless collaboration with shared workspaces and real-time editing capabilities."
   }
 ];
 
@@ -79,10 +71,9 @@ export function FeaturesFlipCards() {
                 <FlipCard
                   frontContent={
                     <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-                      <div className="w-16 h-16 bg-red-600/10 rounded-2xl flex items-center justify-center mb-4">
-                        <Icon className="w-8 h-8 text-red-600" />
+                      <div className="w-20 h-20 bg-red-600/10 rounded-2xl flex items-center justify-center mb-6">
+                        <Icon className="w-10 h-10 text-red-600" />
                       </div>
-                      <div className="text-6xl mb-4">{feature.visual}</div>
                       <h3 className="text-lg font-medium text-white">{feature.title}</h3>
                     </div>
                   }
