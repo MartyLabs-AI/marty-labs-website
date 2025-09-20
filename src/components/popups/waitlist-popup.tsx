@@ -32,7 +32,9 @@ export function WaitlistPopup({ isOpen, onClose }: WaitlistPopupProps) {
     companySize: "",
     whatsapp: "",
     email: "",
-    linkedin: ""
+    linkedin: "",
+    company: "",
+    useCase: ""
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,7 +70,9 @@ export function WaitlistPopup({ isOpen, onClose }: WaitlistPopupProps) {
             companySize: "",
             whatsapp: "",
             email: "",
-            linkedin: ""
+            linkedin: "",
+            company: "",
+            useCase: ""
           });
         }, 2000);
       } else {
@@ -218,6 +222,41 @@ export function WaitlistPopup({ isOpen, onClose }: WaitlistPopupProps) {
                 className="mt-1"
                 required
               />
+            </div>
+
+            <div>
+              <Label htmlFor="company" className="text-sm font-medium text-foreground">
+                Company *
+              </Label>
+              <Input
+                id="company"
+                type="text"
+                value={formData.company}
+                onChange={(e) => handleInputChange('company', e.target.value)}
+                className="mt-1"
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="useCase" className="text-sm font-medium text-foreground">
+                Use Case *
+              </Label>
+              <Select value={formData.useCase} onValueChange={(value) => handleInputChange('useCase', value)}>
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Select use case" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="marketing">Marketing</SelectItem>
+                  <SelectItem value="social-media">Social Media</SelectItem>
+                  <SelectItem value="advertising">Advertising</SelectItem>
+                  <SelectItem value="content-creation">Content Creation</SelectItem>
+                  <SelectItem value="education">Education</SelectItem>
+                  <SelectItem value="e-commerce">E-commerce</SelectItem>
+                  <SelectItem value="entertainment">Entertainment</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="col-span-2">
