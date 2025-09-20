@@ -12,10 +12,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare data for Google Sheets Apps Script (matching your script exactly)
+    // Prepare data for Google Sheets Apps Script (matching ALL form fields)
     const waitlistData = {
       Name: body.name || 'Not provided',
-      Email: body.email
+      Role: body.role || 'Not provided',
+      'Video Generations': body.videoGenerations || 'Not provided',
+      'Company Size': body.companySize || 'Not provided',
+      WhatsApp: body.whatsapp || 'Not provided',
+      Email: body.email || 'Not provided',
+      Company: body.company || 'Not provided',
+      'Use Case': body.useCase || 'Not provided',
+      LinkedIn: body.linkedin || 'Not provided'
     };
 
     // Log data to console
@@ -25,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     // Send to Google Apps Script
     try {
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKrxs8TcNM2_cHfhyZJcvk3AKB2PrJLlTULUfmUGU8_N6rVzx8OjCLF86c-_t6YQLxBw/exec';
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAgmeMAeA0CNFvBs9hLMzDQaaBQABvDulgL4gHq6E1-nLobKexu4SxxyDvJ-y4J2KTCg/exec';
       
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',

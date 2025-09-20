@@ -30,15 +30,15 @@ export async function POST(request: NextRequest) {
       resumeInfo = `${resume.name} (${Math.round(resume.size / 1024)}KB)`;
     }
 
-    // Prepare data for Google Sheets Apps Script (matching your script exactly)
+    // Prepare data for Google Sheets Apps Script (matching ALL form fields)
     const hiringData = {
       Name: name,
       Phone: phone,
-      Position: department,  // Your script expects "Position", not "department"
+      Department: department,
+      Resume: resumeInfo || 'No resume uploaded',
       "Role Description": roleDescription,
-      LinkedIn: linkedin || '',
-      Achievements: achievements || '',
-      Resume: resumeInfo || 'No resume uploaded'
+      "Portfolio Links": achievements || '',  // Form sends "achievements" but it's actually portfolio links
+      LinkedIn: linkedin || ''
     };
 
     // Log data to console
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
     // Send to Google Apps Script
     try {
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHLZkz7rwBczTlLKFI-aJJfV6Cx3d8kTqxqHoWmUyAQJMI0hJLLFGUZyE-3LLcQDmU/exec';
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIXeWfrxkolv6ENnBCky1vsJvVB72q-P76F_pB52rrRFOvL9LuWVjPxQEtp1lFlqWI/exec';
       
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
