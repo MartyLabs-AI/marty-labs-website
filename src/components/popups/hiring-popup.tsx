@@ -28,8 +28,10 @@ interface HiringPopupProps {
 export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phone: "",
     department: "",
+    experienceLevel: "",
     resume: null as File | null,
     roleDescription: "",
     achievements: "",
@@ -47,8 +49,10 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
       // Create form data for file upload
       const submitData = new FormData();
       submitData.append('name', formData.name);
+      submitData.append('email', formData.email);
       submitData.append('phone', formData.phone);
       submitData.append('department', formData.department);
+      submitData.append('experienceLevel', formData.experienceLevel);
       submitData.append('roleDescription', formData.roleDescription);
       submitData.append('achievements', formData.achievements);
       submitData.append('linkedin', formData.linkedin);
@@ -72,8 +76,10 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
           setSubmitted(false);
           setFormData({
             name: "",
+            email: "",
             phone: "",
             department: "",
+            experienceLevel: "",
             resume: null,
             roleDescription: "",
             achievements: "",
@@ -152,6 +158,21 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
           </div>
 
           <div>
+            <Label htmlFor="email" className="text-sm font-medium text-foreground">
+              Email *
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              placeholder="your@email.com"
+              className="mt-1"
+              required
+            />
+          </div>
+
+          <div>
             <Label htmlFor="phone" className="text-sm font-medium text-foreground">
               Phone *
             </Label>
@@ -166,7 +187,7 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
             />
           </div>
 
-          <div className="col-span-2">
+          <div>
             <Label htmlFor="department" className="text-sm font-medium text-foreground">
               Department *
             </Label>
@@ -187,6 +208,25 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
                 <SelectItem value="hr">Human Resources</SelectItem>
                 <SelectItem value="business-development">Business Development</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="experienceLevel" className="text-sm font-medium text-foreground">
+              Experience Level *
+            </Label>
+            <Select value={formData.experienceLevel} onValueChange={(value) => handleInputChange('experienceLevel', value)}>
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder="Select experience level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="entry-level">Entry Level (0-1 years)</SelectItem>
+                <SelectItem value="junior">Junior (1-3 years)</SelectItem>
+                <SelectItem value="mid-level">Mid Level (3-5 years)</SelectItem>
+                <SelectItem value="senior">Senior (5-8 years)</SelectItem>
+                <SelectItem value="lead">Lead (8+ years)</SelectItem>
+                <SelectItem value="executive">Executive/C-Level</SelectItem>
               </SelectContent>
             </Select>
           </div>

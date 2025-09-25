@@ -9,14 +9,15 @@ import { Component as AnimatedBackground } from "@/components/ui/open-ai-codex-a
 import { BlurFade } from "@/components/ui/blur-fade";
 import { EvervaultCard, Icon } from "@/components/ui/evervault-card";
 import { InViewMediaGrid } from "@/components/ui/in-view-media-grid";
-import { VideoCardStack3D } from "@/components/ui/3d-video-carousel";
+import { AdFilmsSection, ShortFormAdsSection, DVCsSection, CreateWithNoLimitsBanner } from "@/components/ui/work-sections";
+import { HeroGrid } from "@/components/hero/HeroGrid";
 import SmoothScrollWrapper from "@/components/ui/smooth-scroll-wrapper";
 import ScrambleTextCascading from "@/components/ui/scramble-text-cascading";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { ProducerAgentBanner } from "@/components/ui/producer-agent-banner";
 import CardFlip from "@/components/ui/card-flip";
 import MartyLabsLogoCloud from "@/components/ui/marty-labs-logo-cloud";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ArrowDownRight } from "lucide-react";
 
 const HeroSection: React.FC<{ setWaitlistOpen: (open: boolean) => void }> = ({ setWaitlistOpen }) => {
   const handleCalendlyClick = () => {
@@ -83,12 +84,15 @@ const FeaturesSection: React.FC = () => {
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-light mb-8 text-white">
-            What is Marty Labs?
+            Brand and Enterprise Solutions
           </h2>
-          <p className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed font-light">
-            We are a brutally creative team of tech-enabled artists who have generated over{" "}
-            <span className="text-red-600 font-medium">500M+ organic views</span> through our cutting-edge campaigns. We transform bold ideas into viral content that captures attention and drives results.
+          <p className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed font-light mb-8">
+            We are a brutally creative team of technologists. We partner with brands and enterprises to create compelling visual narratives that resonate with their audiences.
           </p>
+          <div className="flex items-center justify-center gap-2 text-white/60 text-sm">
+            <span>scroll for solutions</span>
+            <ArrowDownRight className="w-4 h-4" />
+          </div>
         </div>
       </div>
     </section>
@@ -239,129 +243,33 @@ export default function Home() {
       />
       
       <SmoothScrollWrapper>
-        <HeroSection setWaitlistOpen={setWaitlistOpen} />
+        <HeroGrid />
         <MartyLabsLogoCloud />
         <ProducerAgentBanner />
         <FeaturesSection />
 
-        {/* What Can We Do For You Section */}
-        <section id="commission" className="py-24 px-6 relative bg-background">
-          <div className="container mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-light mb-8 text-foreground">
-                What can we do for you?
-              </h2>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-7xl mx-auto">
-              {/* Create Ads */}
-              <CardFlip
-                title="Create Ads"
-                subtitle="High-converting campaigns that drive results"
-                description="Transform your brand message into viral advertisement campaigns. We craft compelling visuals and copy that resonate with your target audience and drive measurable results."
-                features={[
-                  "Strategic Campaign Development",
-                  "Multi-Platform Optimization", 
-                  "Performance Analytics",
-                  "A/B Testing & Iteration"
-                ]}
-                imageSrc="https://davhrppssmixrmhusdtb.supabase.co/storage/v1/object/public/videos/What-Was-the-Renaissance-Featured-580444997%20copy.jpg"
-                imageAlt="Create Ads"
-                onStartClick={handleCalendlyClick}
-              />
-
-              {/* Create Media IPs */}
-              <CardFlip
-                title="Create Media IPs"
-                subtitle="Build intellectual properties with viral potential"
-                description="Develop long-lasting media intellectual properties that scale and generate ongoing value. From concept to execution, we create content franchises that captivate audiences."
-                features={[
-                  "IP Strategy & Development",
-                  "Content Franchise Creation",
-                  "Viral Content Design",
-                  "Long-term Value Building"
-                ]}
-                imageSrc="https://davhrppssmixrmhusdtb.supabase.co/storage/v1/object/public/videos/What-Was-the-Renaissance-Featured-580444997.jpg"
-                imageAlt="Create Media IPs"
-                onStartClick={handleCalendlyClick}
-              />
-
-              {/* Producer Agent Access */}
-              <CardFlip
-                title="Producer Agent"
-                subtitle="AI-powered content creation at scale"
-                description="Access our cutting-edge AI tool that revolutionizes content creation. Generate, edit, and optimize visual content with unprecedented speed and quality."
-                features={[
-                  "AI Image & Video Generation",
-                  "Advanced Editing Tools",
-                  "4K Upscaling Technology",
-                  "Context Memory System"
-                ]}
-                imageSrc="https://davhrppssmixrmhusdtb.supabase.co/storage/v1/object/public/videos/%20.jpeg"
-                imageAlt="Producer Agent"
-                onStartClick={() => setWaitlistOpen(true)}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* 3D Video Carousel Section */}
-        <section className="py-24 px-6 relative bg-black">
-          <div className="container mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-light mb-8 text-white">
-                Our Work
-              </h2>
-              <p className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-light">
-                Explore our portfolio of creative campaigns and digital content that have captivated audiences worldwide.
-              </p>
-            </div>
-            <VideoCardStack3D 
-              videos={[
-                {
-                  id: 1,
-                  title: 'Durex - fake Ad',
-                  desc: 'Motion Graphics',
-                  url: 'https://drive.google.com/file/d/10Zf0Iw9iieuN8eCXBUdkRdcl7l6TkwbE/view?usp=sharing'
-                },
-                {
-                  id: 2,
-                  title: 'Rumik.AI DVC',
-                  desc: 'Commercial',
-                  url: 'https://drive.google.com/file/d/1TEvIbp6wToJRwNNJ26nk_zAtlZqVw72b/view?usp=sharing'
-                },
-                {
-                  id: 3,
-                  title: 'Setu',
-                  desc: 'Advertisement',
-                  url: 'https://drive.google.com/file/d/1kVNK0Ftn6EuhK22aUU0THPAcmHVYmVw2/view?usp=sharing'
-                },
-                {
-                  id: 4,
-                  title: 'Digital Video Commercial',
-                  desc: 'Social Media',
-                  url: 'https://drive.google.com/file/d/15fx4fY_mp7N9B-_zS4Os32k7UphXdsD5/view?usp=sharing'
-                },
-                {
-                  id: 5,
-                  title: 'Brand Awareness Campaign',
-                  desc: 'Narrative',
-                  url: 'https://drive.google.com/file/d/1gcCKODF0k-l25wCTTuOSaMBZHVq4EFo9/view?usp=sharing'
-                }
-              ]}
-              cardWidth={455}
-              cardHeight={260}
-              spacing={{ x: 52, y: 52 }}
-            />
-          </div>
-        </section>
+        {/* Our Work Sections */}
+        <AdFilmsSection />
+        <ShortFormAdsSection />
+        <DVCsSection />
+        <CreateWithNoLimitsBanner />
 
 
         {/* Footer */}
-        <footer className="py-16 px-6 bg-background border-t border-border/50">
+        <footer className="py-12 px-6 bg-background border-t border-border/50">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
               <div className="text-muted-foreground">
+                {/* Spicy Ventures Logo */}
+                <div className="flex items-center gap-3 mb-3">
+                  <img 
+                    src="https://davhrppssmixrmhusdtb.supabase.co/storage/v1/object/public/videos/Group%2043.png"
+                    alt="Spicy Ventures Logo"
+                    className="w-8 h-8 object-contain"
+                  />
+                  <p className="text-xs text-muted-foreground">Spicy Ventures™</p>
+                </div>
                 <ScrambleTextCascading 
                   text="© 2025 Marty Labs. All rights reserved."
                   className="text-sm"

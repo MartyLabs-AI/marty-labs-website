@@ -86,7 +86,7 @@ export function MiniNavbar({ onWaitlistOpen, onHiringOpen }: MiniNavbarProps) {
       isActive: pathname === '/'
     },
     { 
-      label: 'Commission Work', 
+      label: 'Talk to Sales', 
       href: '#commission',
       onClick: handleCalendlyClick
     },
