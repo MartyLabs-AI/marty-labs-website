@@ -184,7 +184,7 @@ export const ProducerAgentSection: React.FC = () => {
                 className="min-h-[120px] flex items-center justify-center"
               >
                 <p className="text-lg text-foreground leading-relaxed italic text-center">
-                  "{examplePrompts[currentPrompt]}"
+                  &ldquo;{examplePrompts[currentPrompt]}&rdquo;
                 </p>
               </motion.div>
 

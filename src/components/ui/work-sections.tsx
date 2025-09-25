@@ -201,7 +201,7 @@ export const AdFilmsSection: React.FC = () => {
                 <GridPatternCardBody>
                   <h3 className="text-3xl md:text-4xl font-light mb-6 text-white">Ad Films</h3>
                   <p className="text-lg md:text-xl leading-relaxed text-white/90">
-                    "A Condom in Teabag" concept as part 'Fake-Ads' Series by the internal creative team. 
+                    &ldquo;A Condom in Teabag&rdquo; concept as part &lsquo;Fake-Ads&rsquo; Series by the internal creative team. 
                     One of our earliest experiments with Producer Agent. We asked a really bad question that 
                     no one wanted answers to, because free will.
                   </p>
@@ -306,7 +306,7 @@ export const DVCsSection: React.FC = () => {
               <GridPatternCardBody>
                 <h3 className="text-3xl md:text-4xl font-light mb-8 text-white">DVCs</h3>
                 <p className="text-lg md:text-xl leading-relaxed text-white/90">
-                  "Ira" for Rumik.ai. Rumik, is on a mission to create an ai friend for 1.4b indians. They aimed to target tier-2, male, 18-23 yo target groups and wanted our help as part of their campaign.
+                  &ldquo;Ira&rdquo; for Rumik.ai. Rumik, is on a mission to create an ai friend for 1.4b indians. They aimed to target tier-2, male, 18-23 yo target groups and wanted our help as part of their campaign.
                 </p>
               </GridPatternCardBody>
             </GridPatternCard>
