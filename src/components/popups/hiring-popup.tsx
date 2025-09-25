@@ -132,182 +132,188 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg mx-auto bg-background/95 backdrop-blur-xl border border-border/50 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-300 max-h-[85vh] overflow-y-auto">
-        <DialogHeader className="pb-3">
+      <DialogContent className="sm:max-w-2xl w-[95vw] max-w-[95vw] sm:w-full mx-auto bg-background/95 backdrop-blur-xl border border-border/50 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-300 max-h-[90vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0 pb-4 border-b border-border/30">
           <DialogTitle className="text-xl font-medium text-foreground">
             Work at Marty Labs
           </DialogTitle>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-sm">
             Join our team of creative professionals and AI innovators
           </p>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-2 grid grid-cols-2 gap-x-4 gap-y-2">
-          <div>
-            <Label htmlFor="name" className="text-sm font-medium text-foreground">
-              Name *
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              value={formData.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
-              className="mt-1"
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="email" className="text-sm font-medium text-foreground">
-              Email *
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              placeholder="your@email.com"
-              className="mt-1"
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="phone" className="text-sm font-medium text-foreground">
-              Phone *
-            </Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              placeholder="+91 98765 43210"
-              className="mt-1"
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="department" className="text-sm font-medium text-foreground">
-              Department *
-            </Label>
-            <Select value={formData.department} onValueChange={(value) => handleInputChange('department', value)}>
-              <SelectTrigger className="mt-1">
-                <SelectValue placeholder="Select department" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="engineering">Engineering</SelectItem>
-                <SelectItem value="design">Design & Creative</SelectItem>
-                <SelectItem value="marketing">Marketing</SelectItem>
-                <SelectItem value="sales">Sales</SelectItem>
-                <SelectItem value="operations">Operations</SelectItem>
-                <SelectItem value="product">Product</SelectItem>
-                <SelectItem value="data-science">Data Science</SelectItem>
-                <SelectItem value="customer-success">Customer Success</SelectItem>
-                <SelectItem value="finance">Finance</SelectItem>
-                <SelectItem value="hr">Human Resources</SelectItem>
-                <SelectItem value="business-development">Business Development</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="experienceLevel" className="text-sm font-medium text-foreground">
-              Experience Level *
-            </Label>
-            <Select value={formData.experienceLevel} onValueChange={(value) => handleInputChange('experienceLevel', value)}>
-              <SelectTrigger className="mt-1">
-                <SelectValue placeholder="Select experience level" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="entry-level">Entry Level (0-1 years)</SelectItem>
-                <SelectItem value="junior">Junior (1-3 years)</SelectItem>
-                <SelectItem value="mid-level">Mid Level (3-5 years)</SelectItem>
-                <SelectItem value="senior">Senior (5-8 years)</SelectItem>
-                <SelectItem value="lead">Lead (8+ years)</SelectItem>
-                <SelectItem value="executive">Executive/C-Level</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="col-span-2">
-            <Label htmlFor="resume" className="text-sm font-medium text-foreground">
-              Resume/Portfolio *
-            </Label>
-            <div className="mt-1">
-              <label className="flex flex-col items-center justify-center w-full h-18 border-2 border-border border-dashed rounded-lg cursor-pointer bg-muted/20 hover:bg-muted/30 transition-colors">
-                <div className="flex flex-col items-center justify-center pt-3 pb-3">
-                  <Upload className="w-6 h-6 mb-1 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
-                    {formData.resume ? (
-                      <span className="font-medium text-foreground">{formData.resume.name}</span>
-                    ) : (
-                      <>
-                        <span className="font-semibold">Click to upload</span> or drag and drop
-                      </>
-                    )}
-                  </p>
-                  <p className="text-xs text-muted-foreground">PDF, DOC, DOCX (MAX. 10MB)</p>
-                </div>
-                <input
-                  id="resume"
-                  type="file"
-                  className="hidden"
-                  accept=".pdf,.doc,.docx"
-                  onChange={handleFileChange}
+        <div className="flex-1 overflow-y-auto py-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="name" className="text-sm font-medium text-foreground">
+                  Name *
+                </Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  className="mt-1"
                   required
                 />
-              </label>
+              </div>
+
+              <div>
+                <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                  Email *
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  placeholder="your@email.com"
+                  className="mt-1"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="phone" className="text-sm font-medium text-foreground">
+                  Phone *
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => handleInputChange('phone', e.target.value)}
+                  placeholder="+91 98765 43210"
+                  className="mt-1"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="department" className="text-sm font-medium text-foreground">
+                  Department *
+                </Label>
+                <Select value={formData.department} onValueChange={(value) => handleInputChange('department', value)}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="engineering">Engineering</SelectItem>
+                    <SelectItem value="design">Design & Creative</SelectItem>
+                    <SelectItem value="marketing">Marketing</SelectItem>
+                    <SelectItem value="sales">Sales</SelectItem>
+                    <SelectItem value="operations">Operations</SelectItem>
+                    <SelectItem value="product">Product</SelectItem>
+                    <SelectItem value="data-science">Data Science</SelectItem>
+                    <SelectItem value="customer-success">Customer Success</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="hr">Human Resources</SelectItem>
+                    <SelectItem value="business-development">Business Development</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="sm:col-span-2">
+                <Label htmlFor="experienceLevel" className="text-sm font-medium text-foreground">
+                  Experience Level *
+                </Label>
+                <Select value={formData.experienceLevel} onValueChange={(value) => handleInputChange('experienceLevel', value)}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select experience level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="entry-level">Entry Level (0-1 years)</SelectItem>
+                    <SelectItem value="junior">Junior (1-3 years)</SelectItem>
+                    <SelectItem value="mid-level">Mid Level (3-5 years)</SelectItem>
+                    <SelectItem value="senior">Senior (5-8 years)</SelectItem>
+                    <SelectItem value="lead">Lead (8+ years)</SelectItem>
+                    <SelectItem value="executive">Executive/C-Level</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-          </div>
 
-          <div className="col-span-2">
-            <Label htmlFor="role-description" className="text-sm font-medium text-foreground">
-              Role Description *
-            </Label>
-            <Textarea
-              id="role-description"
-              value={formData.roleDescription}
-              onChange={(e) => handleInputChange('roleDescription', e.target.value)}
-              placeholder="Tell us about the position you're interested in..."
-              className="mt-1 min-h-[40px]"
-              required
-            />
-          </div>
+            <div>
+              <Label htmlFor="resume" className="text-sm font-medium text-foreground">
+                Resume/Portfolio *
+              </Label>
+              <div className="mt-2">
+                <label className="flex flex-col items-center justify-center w-full h-20 border-2 border-border border-dashed rounded-lg cursor-pointer bg-muted/20 hover:bg-muted/30 transition-colors">
+                  <div className="flex flex-col items-center justify-center py-4">
+                    <Upload className="w-6 h-6 mb-2 text-muted-foreground" />
+                    <p className="text-sm text-muted-foreground">
+                      {formData.resume ? (
+                        <span className="font-medium text-foreground">{formData.resume.name}</span>
+                      ) : (
+                        <>
+                          <span className="font-semibold">Click to upload</span> or drag and drop
+                        </>
+                      )}
+                    </p>
+                    <p className="text-xs text-muted-foreground">PDF, DOC, DOCX (MAX. 10MB)</p>
+                  </div>
+                  <input
+                    id="resume"
+                    type="file"
+                    className="hidden"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleFileChange}
+                    required
+                  />
+                </label>
+              </div>
+            </div>
 
-          <div className="col-span-2">
-            <Label htmlFor="achievements" className="text-sm font-medium text-foreground">
-              Portfolio Links *
-            </Label>
-            <Textarea
-              id="achievements"
-              value={formData.achievements}
-              onChange={(e) => handleInputChange('achievements', e.target.value)}
-              placeholder="Share links to your portfolio, projects, or work..."
-              className="mt-1 min-h-[40px]"
-              required
-            />
-          </div>
+            <div>
+              <Label htmlFor="role-description" className="text-sm font-medium text-foreground">
+                Role Description *
+              </Label>
+              <Textarea
+                id="role-description"
+                value={formData.roleDescription}
+                onChange={(e) => handleInputChange('roleDescription', e.target.value)}
+                placeholder="Tell us about the position you're interested in..."
+                className="mt-2 min-h-[60px]"
+                required
+              />
+            </div>
 
-          <div className="col-span-2">
-            <Label htmlFor="linkedin" className="text-sm font-medium text-foreground">
-              LinkedIn Profile *
-            </Label>
-            <Input
-              id="linkedin"
-              type="url"
-              value={formData.linkedin}
-              onChange={(e) => handleInputChange('linkedin', e.target.value)}
-              placeholder="https://linkedin.com/in/yourprofile"
-              className="mt-1"
-              required
-            />
-          </div>
+            <div>
+              <Label htmlFor="achievements" className="text-sm font-medium text-foreground">
+                Portfolio Links *
+              </Label>
+              <Textarea
+                id="achievements"
+                value={formData.achievements}
+                onChange={(e) => handleInputChange('achievements', e.target.value)}
+                placeholder="Share links to your portfolio, projects, or work..."
+                className="mt-2 min-h-[60px]"
+                required
+              />
+            </div>
 
+            <div>
+              <Label htmlFor="linkedin" className="text-sm font-medium text-foreground">
+                LinkedIn Profile *
+              </Label>
+              <Input
+                id="linkedin"
+                type="url"
+                value={formData.linkedin}
+                onChange={(e) => handleInputChange('linkedin', e.target.value)}
+                placeholder="https://linkedin.com/in/yourprofile"
+                className="mt-2"
+                required
+              />
+            </div>
+          </form>
+        </div>
+
+        <div className="flex-shrink-0 pt-4 border-t border-border/30">
           <Button
-            type="submit"
-            className="col-span-2 bg-blue-500 hover:bg-blue-600 text-white mt-1"
+            onClick={handleSubmit}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 text-base font-medium"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
@@ -319,7 +325,7 @@ export function HiringPopup({ isOpen, onClose }: HiringPopupProps) {
               'Submit Application'
             )}
           </Button>
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
   );
