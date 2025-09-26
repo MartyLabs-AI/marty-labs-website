@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { Volume2, VolumeX, Play, Pause, ArrowDownRight } from 'lucide-react';
+import { Volume2, VolumeX, Play, Pause, ArrowDownRight, PlayCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GridPatternCard, GridPatternCardBody } from '@/components/ui/card-with-grid-ellipsis-pattern';
 import { ShinyButton } from '@/components/ui/shiny-button';
@@ -16,6 +16,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", isVertic
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
 
@@ -102,8 +103,23 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", isVertic
         muted={isMuted}
         loop
         playsInline
-        className={`w-full h-full object-cover rounded-2xl ${isVertical ? 'aspect-[9/16]' : 'aspect-video'}`}
+        className={`w-full h-full object-cover rounded-2xl ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} transition-all duration-300`}
+        onLoadedData={() => setIsLoaded(true)}
       />
+      
+      {/* Glass overlay for video indication - visible when not playing */}
+      {!isPlaying && (
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/20 backdrop-blur-[1px] rounded-2xl transition-opacity duration-300 group-hover:opacity-70 md:opacity-40">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent rounded-2xl" />
+        </div>
+      )}
+      
+      {/* Loading state */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse rounded-2xl">
+          <div className="w-full h-full bg-gray-700/50 rounded-2xl"></div>
+        </div>
+      )}
       
       {/* Controls overlay - only visible on hover */}
       <div className={`absolute bottom-4 left-4 flex gap-2 transition-opacity duration-200 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
@@ -125,6 +141,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", isVertic
 };
 
 const SimpleVideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", isVertical = false }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
 
@@ -137,6 +155,7 @@ const SimpleVideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", is
         }
         playPromiseRef.current = videoRef.current.play();
         await playPromiseRef.current;
+        setIsPlaying(true);
       } catch (error) {
         // Ignore play interruption errors
         console.debug('Video play interrupted:', error);
@@ -154,12 +173,13 @@ const SimpleVideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", is
         playPromiseRef.current = null;
       }
       videoRef.current.pause();
+      setIsPlaying(false);
     }
   };
 
   return (
     <div 
-      className={`relative ${className}`}
+      className={`relative group ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -169,8 +189,23 @@ const SimpleVideoPlayer: React.FC<VideoPlayerProps> = ({ src, className = "", is
         muted
         loop
         playsInline
-        className={`w-full h-full object-cover rounded-2xl ${isVertical ? 'aspect-[9/16]' : 'aspect-video'}`}
+        className={`w-full h-full object-cover rounded-2xl ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} transition-all duration-300`}
+        onLoadedData={() => setIsLoaded(true)}
       />
+      
+      {/* Glass overlay for video indication - visible when not playing */}
+      {!isPlaying && (
+        <div className="absolute inset-0 bg-gradient-to-br from-white/3 via-transparent to-black/15 backdrop-blur-[0.5px] rounded-2xl transition-opacity duration-300 group-hover:opacity-60 md:opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-2xl" />
+        </div>
+      )}
+      
+      {/* Loading state */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse rounded-2xl">
+          <div className="w-full h-full bg-gray-700/50 rounded-2xl"></div>
+        </div>
+      )}
     </div>
   );
 };
